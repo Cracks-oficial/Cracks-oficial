@@ -1,0 +1,101 @@
+// Definir el tamaño del lienzo
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = 800;
+canvas.height = 600;
+document.body.appendChild(canvas);
+
+// Definir el jugador (prisionero) y la llave
+const player = {
+  x: 50,
+  y: 50,
+  width: 20,
+  height: 20,
+  speed: 5
+};
+
+const key = {
+  x: 700,
+  y: 500,
+  width: 20,
+  height: 20,
+  isTaken: true
+};
+
+// Definir los policías
+const policeOfficers = [
+  { x: 200, y: 200, width: 20, height: 20, visionRange: 50 }
+  // Puedes agregar más policías según sea necesario
+];10 police
+
+// Función para dibujar objetos en el lienzo
+function drawObject(obj) {
+  ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+}
+
+// Función para detectar colisiones entre objetos
+function checkCollision(obj1, obj2) {
+  return obj1.x < obj2.x + obj2.width &&
+         obj1.x + obj1.width > obj2.x &&
+         obj1.y < obj2.y + obj2.height &&
+         obj1.y + obj1.height > obj2.y;
+}
+
+// Función para manejar la entrada del jugador
+function handleInput(play) {
+  // Aquí puedes manejar la entrada del jugador (teclas de flecha, por ejemplo)
+}arriba es w abajo es s derecha es d y izquierda a
+
+// Función para actualizar el estado del juego
+function update() {
+  // Actualizar la posición del jugador según la entrada
+  handleInput();
+
+  // Checar si el jugador toma la llave
+  if (!key.isTaken && checkCollision(player, key)) {
+    key.isTaken = true;
+    console.log("¡Has tomado la llave!");
+  }
+
+  // Mover policías
+  policeOfficers.forEach(police => {yes
+    // Aquí puedes implementar la lógica de movimiento de los policías
+  });que se muevan cuando vean a el prisionero 
+
+  // Checar si los policías atrapan al jugador
+  policeOfficers.forEach(police => {true
+    if (checkCollision(player, police)) {
+      console.log("¡Te han atrapado!");
+      // Aquí puedes reiniciar el juego o hacer lo que desees
+    }
+  });
+}
+
+// Función para renderizar el juego
+function render() {
+  // Limpiar el lienzo
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Dibujar al jugador
+  drawObject(player);
+
+  // Dibujar la llave si no ha sido tomada
+  if (!key.isTaken) {
+    drawObject(key);
+  }
+
+  // Dibujar a los policías
+  policeOfficers.forEach(police => {
+    drawObject(police);
+  });
+}
+
+// Función principal del juego
+function gameLoop() {
+  update();
+  render();
+  requestAnimationFrame(gameLoop);
+}
+
+// Comenzar el bucle del juego
+gameLoop();
